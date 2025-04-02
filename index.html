@@ -15,22 +15,18 @@
     }
   </style>
 </head>
-<body class="bg-gray-900 text-gray-100 font-sans min-h-screen flex flex-col-reverse p-4 overflow-hidden">
+<body class="bg-gray-900 text-gray-100 font-sans min-h-screen flex flex-col p-4 gap-4">
   <audio id="msnSound" src="./msn.mp3" preload="auto"></audio>
 
-  <ul id=\"results\" class=\"flex flex-col-reverse $1 pt-4 pb-52\"></ul>
+  <main class="flex flex-col-reverse grow overflow-y-auto gap-2" id="results"></main>
 
-  <!-- Sticky footer controller -->
-  <div class="fixed bottom-0 left-0 w-full bg-gray-800 border-t border-gray-700 px-4 py-4 z-50">
+  <div class="w-full bg-gray-800 border-t border-gray-700 px-4 py-4">
     <div class="max-w-xl mx-auto text-center">
       <h1 class="text-2xl font-bold mb-4">Degenerátor</h1>
-      
-      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mt-4">
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
         <button id="generate" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-4 px-4 rounded-xl transition-all w-full sm:w-auto">
           Rekvesztálás
         </button>
-
-        <!-- Flowbite toggle -->
         <label class="inline-flex items-center cursor-pointer">
           <input type="checkbox" id="absurdToggle" value="" class="sr-only peer">
           <div class="w-11 h-6 bg-gray-600 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-purple-500 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-purple-600 relative"></div>
@@ -71,7 +67,7 @@
       const results = document.getElementById('results');
       const word = generateBullshit();
 
-      const li = document.createElement('li');
+      const li = document.createElement('div');
       li.classList.add('fade-in', 'flex', 'justify-between', 'items-center', 'bg-gray-800', 'rounded', 'px-4', 'py-2');
 
       const span = document.createElement('span');
@@ -90,10 +86,7 @@
 
       li.appendChild(span);
       li.appendChild(copyButton);
-      results.appendChild(li);
-
-      // Scroll to bottom to ensure new item is visible
-      results.scrollTop = results.scrollHeight;
+      results.prepend(li);
 
       const sound = document.getElementById('msnSound');
       sound.currentTime = 0;
