@@ -87,6 +87,9 @@
       li.appendChild(copyButton);
       results.prepend(li);
 
+      // Scroll to bottom
+      results.scrollTop = results.scrollHeight;
+
       const sound = document.getElementById('msnSound');
       sound.currentTime = 0;
       sound.play();
