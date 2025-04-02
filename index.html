@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Degenerátor</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .fade-in {
+      animation: fadeIn 0.4s ease-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body class="bg-gray-900 text-gray-100 font-sans min-h-screen flex flex-col p-4 pb-28">
+  <audio id="msnSound" src="./msn.mp3" preload="auto"></audio>
+
+  <ul id="results" class="space-y-2 text-lg text-left"></ul>
+
+  <!-- Sticky footer controller -->
+  <div class="fixed bottom-0 left-0 w-full bg-gray-800 border-t border-gray-700 px-4 py-4 z-50">
+    <div class="max-w-xl mx-auto text-center">
+      <h1 class="text-2xl font-bold mb-2">Degenerátor</h1>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <button id="generate" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-xl transition-all w-full sm:w-auto">
+          Rekvesztálás
+        </button>
+
+        <!-- Flowbite toggle -->
+        <label class="inline-flex items-center cursor-pointer">
+          <input type="checkbox" id="absurdToggle" value="" class="sr-only peer">
+          <div class="w-11 h-6 bg-gray-600 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-purple-500 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-purple-600 relative"></div>
+          <span class="ml-3 text-sm text-gray-300">Abszurd mód</span>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const realWords = [
+      "accurate", "feasible", "deductive", "exclusive", "responsive",
+      "constructive", "predictive", "reliable", "compatible", "innovative",
+      "sustainable", "decorative", "manipulative", "objective", "explicit",
+      "fragmented", "resilient", "salient", "circumstantial", "compelling"
+    ];
+
+    const absurdWords = [
+      "scalebomb", "clickflux", "incepticon", "buzztronic", "disrupticon",
+      "affordex", "loopfrag", "synergex", "fakenetic", "bullshiflex"
+    ];
+
+    const suffixes = [
+      "ív", "áns", "ábilis", "ens", "atív", "ensz", "izív", "ált", "ívusz",
+      "etív", "ics", "idens", "izálható", "ábl", "ós", "ikus", "inens"
+    ];
+
+    function generateBullshit() {
+      const absurdMode = document.getElementById('absurdToggle').checked;
+      const wordList = absurdMode ? absurdWords : realWords;
+      const base = wordList[Math.floor(Math.random() * wordList.length)];
+      const suffix = suffixes[Math.floor(Math.random() * suffixes.length)];
+      const stem = base.length > 6 ? base.slice(0, -2) : base;
+      return stem + suffix;
+    }
+
+    document.getElementById('generate').addEventListener('click', () => {
+      const results = document.getElementById('results');
+      const word = generateBullshit();
+      const li = document.createElement('li');
+      li.textContent = word;
+      li.classList.add('fade-in');
+      results.prepend(li);
+
+      const sound = document.getElementById('msnSound');
+      sound.currentTime = 0;
+      sound.play();
+    });
+  </script>
+</body>
+</html>
